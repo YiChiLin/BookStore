@@ -16,10 +16,10 @@ namespace BookStore
 
         internal decimal GetPrice()
         {
-            var groupByBooks = Books.GroupBy(b => b.Name)
+            var distinctBooks = Books.GroupBy(b => b.Name)
                                     .Select(group => new { @group.Key, Count = @group.Count() }).ToList();
 
-            var duplicateBooks = groupByBooks.Select(x => new { Count = x.Count - 1 }).Where(y => y.Count >= 1).Select(x => new { x.Count }).ToList();
+            var duplicateBooks = distinctBooks.Select(x => new { Count = x.Count - 1 }).Where(y => y.Count >= 1).Select(x => new { x.Count }).ToList();
 
             decimal price = 0;
             while (duplicateBooks.Count > 0)
@@ -28,7 +28,7 @@ namespace BookStore
                 duplicateBooks = duplicateBooks.Where(y => y.Count > 1).Select(x => new { Count = x.Count - 1 }).ToList();
             }
 
-            return CaculatePrice(groupByBooks.Count) + price;
+            return CaculatePrice(distinctBooks.Count) + price;
         }
 
         private decimal CaculatePrice(int booksQuantity)
