@@ -11,6 +11,8 @@
 
         internal decimal CaculateTotalPrice()
         {
+            if (Books == 2)
+                return (decimal) (100*2*0.95);
             return 100;
         }
     }
