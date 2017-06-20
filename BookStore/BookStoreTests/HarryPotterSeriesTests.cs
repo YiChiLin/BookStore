@@ -43,5 +43,15 @@ namespace BookStore.Tests
             var expected = 320;
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void Buy_Complete_Series_HarryPotterBooks_Is_NT375()
+        {
+            var numberOfBook = 5;
+            var target = new HarryPotterSeries(numberOfBook);
+            var actual = target.CaculateTotalPrice();
+            var expected = 375;
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
