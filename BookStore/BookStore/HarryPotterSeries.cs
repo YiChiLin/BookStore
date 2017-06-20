@@ -7,13 +7,7 @@ namespace BookStore
 {
     internal class HarryPotterSeries 
     {
-        private int NumberOfBooks { get; set; }
         private IEnumerable<Books> Books { get; set; }
-
-        public HarryPotterSeries(int numberOfNumberOfBook)
-        {
-            NumberOfBooks = numberOfNumberOfBook;
-        }
 
         public HarryPotterSeries(IEnumerable<Books> books)
         {
@@ -22,15 +16,19 @@ namespace BookStore
 
         internal decimal GetPrice()
         {
-            var distinctBooks = Books.GroupBy(b => b.Name)
-                .Where(name => name.Count() == 1)
-                .Select(group => @group.Key).ToList();
+            var groupByBooks = Books.GroupBy(b => b.Name)
+                                    .Select(group => new { @group.Key, Count = @group.Count() }).ToList();
 
-            var duplicateBooks = Books.GroupBy(b => b.Name)
-                .Where(name => name.Count() > 1)
-                .Select(group => new { @group.Key, Count = @group.Count() }).ToList();
+            var duplicateBooks = groupByBooks.Select(x => new { Count = x.Count - 1 }).Where(y => y.Count >= 1).Select(x => new { x.Count }).ToList();
 
-            return CaculatePrice(distinctBooks.Count) + CaculatePrice(duplicateBooks.Count);
+            decimal price = 0;
+            while (duplicateBooks.Count > 0)
+            {
+                price += CaculatePrice(duplicateBooks.Count);
+                duplicateBooks = duplicateBooks.Where(y => y.Count > 1).Select(x => new { Count = x.Count - 1 }).ToList();
+            }
+
+            return CaculatePrice(groupByBooks.Count) + price;
         }
 
         private decimal CaculatePrice(int booksQuantity)
@@ -45,10 +43,10 @@ namespace BookStore
                     return (decimal) (100*3*0.9);
                 case 2:
                     return (decimal) (100*2*0.95);
-                case 0:
-                    return 0;
-                default:
+                case 1:
                     return 100;
+                default:
+                    return 0;
             }
         }
 

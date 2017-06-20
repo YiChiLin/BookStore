@@ -87,7 +87,6 @@ namespace BookStore.Tests
             {
                 new Books(){Name = "HarryPotter1"},
                 new Books(){Name = "HarryPotter2"},
-                new Books(){Name = "HarryPotter3"},
                 new Books(){Name = "HarryPotter4"},
                 new Books(){Name = "HarryPotter4"}
             };
