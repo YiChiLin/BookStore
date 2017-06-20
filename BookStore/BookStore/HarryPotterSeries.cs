@@ -13,6 +13,8 @@
         {
             switch (Books)
             {
+                case 4:
+                    return (decimal) (100*4*0.8);
                 case 3:
                     return (decimal) (100*3*0.9);
                 case 2:
