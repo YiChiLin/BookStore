@@ -24,7 +24,6 @@ namespace BookStore.Tests
             Assert.AreEqual(expected, actual);
         }
 
-
         [TestMethod()]
         public void Buy_3_Different_HarryPotterBooks_Is_NT270()
         {
