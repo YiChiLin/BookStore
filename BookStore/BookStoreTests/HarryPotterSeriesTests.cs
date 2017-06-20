@@ -97,5 +97,23 @@ namespace BookStore.Tests
             var expected = 370;
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void Buy_1_Different_And_2_PairBook_Is_Duplicate_HarryPotterBooks_Is_NT460()
+        {
+            var shoppingCart = new List<Books>()
+            {
+                new Books(){Name = "HarryPotter1"},
+                new Books(){Name = "HarryPotter2"},
+                new Books(){Name = "HarryPotter2"},
+                new Books(){Name = "HarryPotter3"},
+                new Books(){Name = "HarryPotter3"}
+            };
+
+            var target = new HarryPotterSeries(shoppingCart);
+            var actual = target.GetPrice();
+            var expected = 460;
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
