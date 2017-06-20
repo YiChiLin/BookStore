@@ -7,7 +7,11 @@ namespace BookStore.Tests
         [TestMethod()]
         public void Buy_1_HarryPotterBook_Is_NT100()
         {
-            Assert.Fail();
+            var numberOfBook = 1;
+            var target = new HarryPotterSeries(numberOfBook);
+            var actual = target.CaculateTotalPrice();
+            var expected = 100;
+            Assert.AreEqual(expected,actual);
         }
     }
 }
